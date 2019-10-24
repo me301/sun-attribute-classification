@@ -39,6 +39,13 @@ def main():
                         help='Pretrained or not')
     parser.add_argument('-frozen_layers', default=0, type=int,
                         help='Number of layers to freeze in the model')
+    parser.add_argument('-lr', default=0.1, type=float,
+                        help='Learning rate of the model')
+    parser.add_argument('-steps', default=1, type=int,
+                        help='Number of epochs required to reduce learning\
+                             rate')
+    parser.add_argument('-gamma', default=0.01, type=float,
+                        help='Value to reduce learning rate by')
     parser.add_argument('--path_to_model', default=None,
                         metavar='path/to/model',
                         help='Path to the pretrained model, if using one')
@@ -116,9 +123,10 @@ def main():
     if args.command == 'train':
 
         # Observe that all parameters are being optimized
-        optimizer_ft = optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
-        exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=1,
-                                               gamma=0.015)
+        optimizer_ft = optim.SGD(model.parameters(), lr=args.lr, momentum=0.9)
+        exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft,
+                                               step_size=args.step,
+                                               gamma=args.gamma)
 
         out_model = train_model(model, train_loader, test_loader, criterion,
                                 optimizer_ft, device, exp_lr_scheduler,
