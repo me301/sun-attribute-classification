@@ -9,10 +9,6 @@ from torch.optim import lr_scheduler
 from torchvision import transforms
 import argparse
 
-r"""python train_test.py train --dataset dataset\SUNAttributeDB_Images\images
---image_path dataset\SUNAttributeDB\images.mat
---output_labels dataset\SUNAttributeDB\attributeLabels_continuous.mat"""
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -46,6 +42,8 @@ def main():
                              rate')
     parser.add_argument('-gamma', default=0.01, type=float,
                         help='Value to reduce learning rate by')
+    parser.add_argument('-epochs', default=5, type=int,
+                        help='Number of epochs to train the model on')
     parser.add_argument('--path_to_model', default=None,
                         metavar='path/to/model',
                         help='Path to the pretrained model, if using one')
@@ -130,7 +128,8 @@ def main():
 
         out_model = train_model(model, train_loader, test_loader, criterion,
                                 optimizer_ft, device, exp_lr_scheduler,
-                                train_dataset, test_dataset)
+                                train_dataset, test_dataset,
+                                num_epochs=args.epochs)
 
         torch.save(out_model.state_dict(), r'saved_model\trained_model.pt')
     elif args.command == 'test':
