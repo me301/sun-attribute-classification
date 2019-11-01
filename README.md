@@ -2,6 +2,8 @@
 
 I just made this project to practise Deep Learning and Git-scm.
 
+All of the repository is in PyTorch with the exception of notebooks. The sunattributes.ipynb is in tensorflow 2.
+
 It's one of the most basic problems in Deep learning to classify an image into various categories. However, I wanted to see whether we can classify an Image and it's features/attributes that we can discern. Hence, the usage of this dataset.
 
 To use this repo to train a model on the dataset, from your terminal:
